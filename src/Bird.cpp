@@ -49,3 +49,13 @@ void Bird::render(sf::RenderTarget& target) const noexcept
 {
     target.draw(sprite);
 }
+
+void Bird::addPoint() noexcept 
+{
+    score++;
+}
+
+int Bird::getScore() const noexcept
+{
+    return score;
+}

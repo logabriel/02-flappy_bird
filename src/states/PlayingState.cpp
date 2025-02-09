@@ -42,6 +42,11 @@ void PlayingState::handle_inputs(const sf::Event& event) noexcept
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
         bird->jump();
+    } 
+    else if (event.type == sf::Event::KeyPressed &&  sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+    {
+        //std::cout << "pauso el juego" << std::endl;
+        state_machine->change_state("pause", world, bird);
     }
 }
 
@@ -59,7 +64,7 @@ void PlayingState::update(float dt) noexcept
 
     if (world->update_scored(bird->get_collision_rect()))
     {
-        ++score;
+        bird->addPoint();
         Settings::sounds["score"].play();
     }
 }
@@ -68,5 +73,5 @@ void PlayingState::render(sf::RenderTarget& target) const noexcept
 {
     world->render(target);
     bird->render(target);
-    render_text(target, 20, 10, "Score: " + std::to_string(score), Settings::FLAPPY_TEXT_SIZE, "flappy", sf::Color::White);
+    render_text(target, 20, 10, "Score: " + std::to_string(bird->getScore()), Settings::FLAPPY_TEXT_SIZE, "flappy", sf::Color::White);
 }

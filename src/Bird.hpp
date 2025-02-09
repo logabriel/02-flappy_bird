@@ -29,6 +29,9 @@ public:
 
     void render(sf::RenderTarget& target) const noexcept;
 
+    void addPoint() noexcept;
+    int getScore() const noexcept;
+
 private:
     float x;
     float y;
@@ -37,4 +40,5 @@ private:
     float vy;
     sf::Sprite sprite;
     bool jumping{false};
+    int score{0};
 };
