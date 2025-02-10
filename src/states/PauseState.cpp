@@ -37,6 +37,6 @@ void PauseState::render(sf::RenderTarget& target) const noexcept
 {
     world->render(target);
     bird->render(target);
-    render_text(target, 20, 10, "Score: " + std::to_string(bird->getScore()), Settings::FLAPPY_TEXT_SIZE, "flappy", sf::Color::White);
+    render_text(target, 20, 10, "Score: " + std::to_string(bird->get_score()), Settings::FLAPPY_TEXT_SIZE, "flappy", sf::Color::White);
     render_text(target, Settings::VIRTUAL_WIDTH / 2, Settings::VIRTUAL_HEIGHT / 2, "PAUSE", Settings::FLAPPY_TEXT_SIZE, "flappy", sf::Color::White, true);
 }

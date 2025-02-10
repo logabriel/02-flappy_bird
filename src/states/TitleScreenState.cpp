@@ -21,8 +21,13 @@ TitleScreenState::TitleScreenState(StateMachine* sm) noexcept
 
 void TitleScreenState::handle_inputs(const sf::Event& event) noexcept
 {
-    if (event.key.code == sf::Keyboard::Return)
+    if (event.key.code == sf::Keyboard::Return) //Normal mode
     {
+        state_machine->change_state("count_down");
+    } 
+    else if (event.key.code == sf::Keyboard::H) //Hard mode 
+    {
+        Settings::game_mode = false;
         state_machine->change_state("count_down");
     }
 }

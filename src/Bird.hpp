@@ -28,17 +28,27 @@ public:
     void update(float dt) noexcept;
 
     void render(sf::RenderTarget& target) const noexcept;
+    //codigo nuevo *********************************************************
+    void add_point() noexcept;
 
-    void addPoint() noexcept;
-    int getScore() const noexcept;
+    int get_score() const noexcept;
 
+    void move_right() noexcept;
+
+    void move_left() noexcept;
+
+    void stop_move() noexcept;
+
+    void moving(float dt) noexcept;
+    //codigo nuevo *********************************************************
 private:
     float x;
     float y;
     float width;
     float height;
     float vy;
+    float vx; //codigo nuevo *********************
     sf::Sprite sprite;
     bool jumping{false};
-    int score{0};
+    int score{0}; //codigo nuevo *****************
 };

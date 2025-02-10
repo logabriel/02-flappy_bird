@@ -32,6 +32,41 @@ void Bird::jump() noexcept
 
 void Bird::update(float dt) noexcept
 {
+    moving(dt);
+}
+
+void Bird::render(sf::RenderTarget& target) const noexcept
+{
+    target.draw(sprite);
+}
+
+void Bird::add_point() noexcept 
+{
+    score++;
+}
+
+int Bird::get_score() const noexcept
+{
+    return score;
+}
+
+void Bird::move_right() noexcept
+{
+    vx = Settings::BIRD_SPEED_X;
+}
+
+void Bird::move_left() noexcept
+{
+    vx = -Settings::BIRD_SPEED_X;
+}
+
+void Bird::stop_move() noexcept
+{
+    vx = 0.f;
+}
+
+void Bird::moving(float dt) noexcept
+{
     vy += Settings::GRAVITY * dt;
 
     if (jumping)
@@ -42,20 +77,7 @@ void Bird::update(float dt) noexcept
     }
 
     y += vy * dt;
+    x += vx * dt;
+
     sprite.setPosition(x, y);
-}
-
-void Bird::render(sf::RenderTarget& target) const noexcept
-{
-    target.draw(sprite);
-}
-
-void Bird::addPoint() noexcept 
-{
-    score++;
-}
-
-int Bird::getScore() const noexcept
-{
-    return score;
 }

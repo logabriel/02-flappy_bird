@@ -34,11 +34,14 @@ std::unordered_map<std::string, sf::Font> Settings::fonts{};
 
 sf::Music Settings::music{};
 
+bool Settings::game_mode{};
+
 void Settings::init()
 {
     Settings::load_textures();
     Settings::load_sounds();
     Settings::load_fonts();
+    Settings::game_mode = true; //Por defecto el juego entra al modo normal
 }
 
 void Settings::load_textures()

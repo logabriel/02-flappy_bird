@@ -43,6 +43,8 @@ struct Settings
     static constexpr int MEDIUM_TEXT_SIZE{18};
     static constexpr int HUGE_TEXT_SIZE{56};
     static constexpr int FLAPPY_TEXT_SIZE{28};
+    static constexpr float BIRD_SPEED_X{60.f};
+    static bool game_mode;
 
     static std::unordered_map<std::string, sf::Texture> textures;
     static std::unordered_map<std::string, sf::SoundBuffer> sound_buffers;
