@@ -64,14 +64,7 @@ void World::update(float dt) noexcept
 
         if (logs_spawn_timer >= Settings::TIME_TO_SPAWN_LOGS)
         {
-            logs_spawn_timer = 0.f;
-
-            std::uniform_int_distribution<int> dist{-20, 20};
-            float y = std::max(-Settings::LOG_HEIGHT + 10, std::min(last_log_y + dist(rng), Settings::VIRTUAL_HEIGHT + 90 - Settings::LOG_HEIGHT));
-
-            last_log_y = y;
-
-            logs.push_back(log_factory.create(Settings::VIRTUAL_WIDTH, y));
+            game_mode->spawn_entity(logs_spawn_timer, rng, last_log_y, logs, log_factory);
         }
     }
 
@@ -120,4 +113,12 @@ void World::render(sf::RenderTarget& target) const noexcept
     }
 
     target.draw(ground);
+}
+
+void World::set_game_mode(std::shared_ptr<BaseStrategy> _game_mode) noexcept
+{
+    if (game_mode == nullptr)
+    {
+        game_mode = _game_mode;
+    }
 }

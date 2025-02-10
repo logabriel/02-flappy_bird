@@ -48,3 +48,16 @@ void NormalMode::render(sf::RenderTarget& target) const noexcept
     bird->render(target);
     render_text(target, 20, 10, "Score: " + std::to_string(bird->get_score()), Settings::FLAPPY_TEXT_SIZE, "flappy", sf::Color::White);
 }
+
+void NormalMode::spawn_entity(float& logs_spawn_timer, std::mt19937 &rng, float &last_log_y, std::list<std::shared_ptr<LogPair>>& logs, Factory<LogPair>& log_factory) noexcept
+{
+    logs_spawn_timer = 0.f;
+
+    std::uniform_int_distribution<int> dist{-20, 20};
+    
+    float y = std::max(-Settings::LOG_HEIGHT + 10, std::min(last_log_y + dist(rng), Settings::VIRTUAL_HEIGHT + 90 - Settings::LOG_HEIGHT));
+    
+    last_log_y = y;
+    
+    logs.push_back(log_factory.create(Settings::VIRTUAL_WIDTH, y));
+}

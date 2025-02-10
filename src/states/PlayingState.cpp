@@ -46,6 +46,7 @@ void PlayingState::enter(std::shared_ptr<World> _world, std::shared_ptr<Bird> _b
     {
         current_strategy = std::make_shared<HardMode>(state_machine, world, bird);
     }
+    world->set_game_mode(current_strategy);
 }
 
 void PlayingState::handle_inputs(const sf::Event& event) noexcept

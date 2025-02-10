@@ -19,6 +19,8 @@
 #include <src/Factory.hpp>
 #include <src/LogPair.hpp>
 
+#include <src/strategy/BaseStrategy.hpp>
+
 class World
 {
 public:
@@ -37,6 +39,8 @@ public:
     void update(float dt) noexcept;
 
     void render(sf::RenderTarget& target) const noexcept;
+
+    void set_game_mode(std::shared_ptr<BaseStrategy> _game_mode) noexcept; 
 private:
     bool generate_logs;
 
@@ -54,4 +58,6 @@ private:
 
     float logs_spawn_timer{0.f};
     float last_log_y{0.f};
+
+    std::shared_ptr<BaseStrategy> game_mode = nullptr;
 };
