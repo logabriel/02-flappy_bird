@@ -76,19 +76,16 @@ void HardMode::spawn_entity(float& logs_spawn_timer, std::mt19937 &rng, float &l
     std::shared_ptr<Log> _top;
     std::shared_ptr<Log> _bottom;
 
-    _top = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
-    _bottom = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + (float)dist_gap(rng) + Settings::LOG_HEIGHT, false);
-    
-    /*if (dist(rng) % 2 == 0) 
+    if (dist(rng) % 2 == 0) 
     {
-        _top = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
-        _bottom = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + (Settings::LOGS_GAP - (float)dist_gap(rng)) + Settings::LOG_HEIGHT, false);
+        _top = std::make_shared<MovingLog>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
+        _bottom = std::make_shared<MovingLog>((float)Settings::VIRTUAL_WIDTH, y + (float)dist_gap(rng) + Settings::LOG_HEIGHT, false);
     }
     else 
     {
-        _top = std::make_shared<Log>(Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
-        _bottom = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOGS_GAP + Settings::LOG_HEIGHT, false);
-    }*/
+        _top = std::make_shared<StaticLog>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
+        _bottom = std::make_shared<StaticLog>((float)Settings::VIRTUAL_WIDTH, y + (float)dist_gap(rng) + Settings::LOG_HEIGHT, false);
+    }
 
     logs.push_back(log_factory.create((float)Settings::VIRTUAL_WIDTH, y, _top, _bottom));
 }

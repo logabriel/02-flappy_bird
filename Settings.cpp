@@ -122,6 +122,16 @@ void Settings::load_sounds()
     sound.setBuffer(result.first->second);
     Settings::sounds["score"] = sound;
 
+    if (!buffer.loadFromFile(Settings::SOUNDS_PATH + "wood_crash.wav"))
+    {
+        throw std::runtime_error{"Error loading sound sounds/wood_crash.wav"};
+    }
+
+    result = Settings::sound_buffers.emplace("wood_crash", buffer);
+
+    sound.setBuffer(result.first->second);
+    Settings::sounds["wood_crash"] = sound;
+
     if (!Settings::music.openFromFile(Settings::SOUNDS_PATH + "marios_way.ogg"))
     {
         throw std::runtime_error{"Error loading music sounds/marios_way.ogg"};

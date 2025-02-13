@@ -19,13 +19,19 @@ public:
 
     sf::FloatRect get_collision_rect() const noexcept;
 
-    void update(float _x) noexcept;
+    virtual void update(float _x, float _y) noexcept {}
 
     void render(sf::RenderTarget& target) const noexcept;
 
-private:
+    virtual float speed_y() const noexcept = 0;
+
+    virtual void change_direction() noexcept {}
+
+    virtual bool is_at_initial_y() const noexcept = 0;
+
+protected:
     float x;
     float y;
-    bool inverted;
+    bool inverted = false;
     sf::Sprite sprite;
 };

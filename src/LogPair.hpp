@@ -10,9 +10,12 @@
 
 #pragma once
 
+#include <memory>
+
 #include <src/Bird.hpp>
 #include <src/Log.hpp>
-#include <memory>
+#include <src/StaticLog.hpp>
+#include <src/MovingLog.hpp>
 
 class LogPair
 {
@@ -31,6 +34,9 @@ public:
 
     void reset(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept;
 
+    void move_limiter() noexcept;
+
+    bool is_gap_closed() const noexcept;
 private:
     float x;
     float y;

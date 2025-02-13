@@ -31,9 +31,14 @@ bool LogPair::collides(const sf::FloatRect& rect) const noexcept
 void LogPair::update(float dt) noexcept
 {
     x += -Settings::MAIN_SCROLL_SPEED * dt;
-
-    top->update(x);
-    bottom->update(x);
+    
+    move_limiter();
+    
+    const float top_dy = top->speed_y() * dt;
+    const float bottom_dy = bottom->speed_y() * dt;
+    
+    top->update(x, top_dy);
+    bottom->update(x, bottom_dy);
 }
 
 void LogPair::render(sf::RenderTarget& target) const noexcept
@@ -70,4 +75,25 @@ void LogPair::reset(float _x, float _y, std::shared_ptr<Log> _top, std::shared_p
     top = _top;
     bottom = _bottom;
     scored = false;
+}
+
+void LogPair::move_limiter() noexcept
+{
+    bool IsGapClosed = is_gap_closed();
+    
+    if(IsGapClosed || top->is_at_initial_y())
+        top->change_direction();
+    if(IsGapClosed || bottom->is_at_initial_y())
+        bottom->change_direction();
+
+    if (IsGapClosed)
+    {
+        Settings::sounds["wood_crash"].stop();
+        Settings::sounds["wood_crash"].play();
+    }
+}
+
+bool LogPair::is_gap_closed() const noexcept
+{
+    return top->get_collision_rect().intersects(bottom->get_collision_rect());
 }
