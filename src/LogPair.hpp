@@ -12,11 +12,12 @@
 
 #include <src/Bird.hpp>
 #include <src/Log.hpp>
+#include <memory>
 
 class LogPair
 {
 public:
-    LogPair(float _x, float _y) noexcept;
+    LogPair(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept;
 
     bool collides(const sf::FloatRect& rect) const noexcept;
 
@@ -28,13 +29,13 @@ public:
 
     bool update_scored(const sf::FloatRect& rect) noexcept;
 
-    void reset(float _x, float _y) noexcept;
+    void reset(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept;
 
 private:
     float x;
     float y;
-    Log top;
-    Log bottom;
+    std::shared_ptr<Log> top;
+    std::shared_ptr<Log> bottom;
 
     bool scored{false};
 };

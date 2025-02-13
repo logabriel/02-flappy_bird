@@ -23,6 +23,7 @@ public:
 
     virtual void spawn_entity(float &logs_spawn_timer, std::mt19937 &rng, float &last_log_y, std::list<std::shared_ptr<LogPair>> &logs, Factory<LogPair> &log_factory) noexcept {}
 
+    virtual float get_timer_spawn_log() noexcept {return 0.f;}
 protected:
     StateMachine* state_machine;
     std::shared_ptr<Bird> bird;

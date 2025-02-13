@@ -9,33 +9,37 @@
 */
 
 #include <Settings.hpp>
+#include <src/Log.hpp>
 #include <src/LogPair.hpp>
 
-LogPair::LogPair(float _x, float _y) noexcept
-    : x{_x}, y{_y},
-      top{x, y + Settings::LOG_HEIGHT, true},
-      bottom{x, y + Settings::LOGS_GAP + Settings::LOG_HEIGHT, false}
-{
+/*top{x, y + Settings::LOG_HEIGHT, true},
+      bottom{x, y + Settings::LOGS_GAP + Settings::LOG_HEIGHT, false}*/
 
+LogPair::LogPair(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept
+    : x{_x}, y{_y},
+    top{_top},
+    bottom{_bottom}
+{
+    
 }
 
 bool LogPair::collides(const sf::FloatRect& rect) const noexcept
 {
-    return top.get_collision_rect().intersects(rect) || bottom.get_collision_rect().intersects(rect);
+    return top->get_collision_rect().intersects(rect) || bottom->get_collision_rect().intersects(rect);
 }
 
 void LogPair::update(float dt) noexcept
 {
     x += -Settings::MAIN_SCROLL_SPEED * dt;
 
-    top.update(x);
-    bottom.update(x);
+    top->update(x);
+    bottom->update(x);
 }
 
 void LogPair::render(sf::RenderTarget& target) const noexcept
 {
-    top.render(target);
-    bottom.render(target);
+    top->render(target);
+    bottom->render(target);
 }
 
 bool LogPair::is_out_of_game() const noexcept
@@ -59,9 +63,11 @@ bool LogPair::update_scored(const sf::FloatRect& rect) noexcept
     return false;
 }
 
-void LogPair::reset(float _x, float _y) noexcept
+void LogPair::reset(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept
 {
     x = _x;
     y = _y;
+    top = _top;
+    bottom = _bottom;
     scored = false;
 }

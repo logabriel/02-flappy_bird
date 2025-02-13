@@ -23,6 +23,12 @@ World::World(bool _generate_logs) noexcept
 void World::reset(bool _generate_logs) noexcept
 {
     generate_logs = _generate_logs;
+
+    for (auto log_pair: logs)
+    {
+        log_factory.remove(log_pair);
+    }
+    logs.clear();
 }
 
 bool World::collides(const sf::FloatRect& rect) const noexcept
@@ -62,11 +68,11 @@ void World::update(float dt) noexcept
     {
         logs_spawn_timer += dt;
 
-        if (logs_spawn_timer >= Settings::TIME_TO_SPAWN_LOGS)
+        if (logs_spawn_timer >= game_mode->get_timer_spawn_log())
         {
             game_mode->spawn_entity(logs_spawn_timer, rng, last_log_y, logs, log_factory);
         }
-    }
+    }   
 
     background_x += -Settings::BACK_SCROLL_SPEED * dt;
 

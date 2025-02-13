@@ -1,4 +1,4 @@
-CXX = clang++ -std=c++14
+CXX = clang++ -std=c++17
 
 INCLUDE = -I.
 

@@ -65,11 +65,35 @@ void HardMode::spawn_entity(float& logs_spawn_timer, std::mt19937 &rng, float &l
 {
     logs_spawn_timer = 0.f;
 
+    std::uniform_real_distribution<float> dist_timer{1.f, 2.f};
+    timer_spawn_log = dist_timer(rng);
+
     std::uniform_int_distribution<int> dist{-20, 20};
-    
     float y = std::max(-Settings::LOG_HEIGHT + 10, std::min(last_log_y + dist(rng), Settings::VIRTUAL_HEIGHT + 90 - Settings::LOG_HEIGHT));
-    
     last_log_y = y;
+
+    std::uniform_int_distribution<int> dist_gap{56, 90};
+    std::shared_ptr<Log> _top;
+    std::shared_ptr<Log> _bottom;
+
+    _top = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
+    _bottom = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + (float)dist_gap(rng) + Settings::LOG_HEIGHT, false);
     
-    logs.push_back(log_factory.create(Settings::VIRTUAL_WIDTH, y));
+    /*if (dist(rng) % 2 == 0) 
+    {
+        _top = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
+        _bottom = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + (Settings::LOGS_GAP - (float)dist_gap(rng)) + Settings::LOG_HEIGHT, false);
+    }
+    else 
+    {
+        _top = std::make_shared<Log>(Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
+        _bottom = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOGS_GAP + Settings::LOG_HEIGHT, false);
+    }*/
+
+    logs.push_back(log_factory.create((float)Settings::VIRTUAL_WIDTH, y, _top, _bottom));
+}
+
+float HardMode::get_timer_spawn_log() noexcept
+{
+    return timer_spawn_log;
 }

@@ -58,6 +58,14 @@ void NormalMode::spawn_entity(float& logs_spawn_timer, std::mt19937 &rng, float 
     float y = std::max(-Settings::LOG_HEIGHT + 10, std::min(last_log_y + dist(rng), Settings::VIRTUAL_HEIGHT + 90 - Settings::LOG_HEIGHT));
     
     last_log_y = y;
+
+    std::shared_ptr<Log> _top = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
+    std::shared_ptr<Log> _bottom = std::make_shared<Log>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOGS_GAP + Settings::LOG_HEIGHT, false);
     
-    logs.push_back(log_factory.create(Settings::VIRTUAL_WIDTH, y));
+    logs.push_back(log_factory.create((float)Settings::VIRTUAL_WIDTH, y, _top, _bottom));
+}
+
+float NormalMode::get_timer_spawn_log() noexcept 
+{
+    return Settings::TIME_TO_SPAWN_LOGS;
 }
