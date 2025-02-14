@@ -34,6 +34,8 @@ std::unordered_map<std::string, sf::Font> Settings::fonts{};
 
 sf::Music Settings::music{};
 
+sf::Music Settings::music_power_up{};
+
 bool Settings::game_mode{};
 
 void Settings::init()
@@ -75,6 +77,20 @@ void Settings::load_textures()
     }
 
     Settings::textures["Log"] = texture;
+
+    if (!texture.loadFromFile(Settings::GRAPHICS_PATH + "berrie.png"))
+    {
+        throw std::runtime_error{"Error loading texture graphics/berrie.png"};
+    }
+
+    Settings::textures["berrie"] = texture;
+
+    if (!texture.loadFromFile(Settings::GRAPHICS_PATH + "bird_ghost.png"))
+    {
+        throw std::runtime_error{"Error loading texture graphics/bird_ghost.png"};
+    }
+
+    Settings::textures["bird_ghost"] = texture;
 }
 
 void Settings::load_sounds()
@@ -132,9 +148,24 @@ void Settings::load_sounds()
     sound.setBuffer(result.first->second);
     Settings::sounds["wood_crash"] = sound;
 
+    if (!buffer.loadFromFile(Settings::SOUNDS_PATH + "hurt.wav"))
+    {
+        throw std::runtime_error{"Error loading sound sounds/hurt.wav"};
+    }
+
+    result = Settings::sound_buffers.emplace("hurt", buffer);
+
+    sound.setBuffer(result.first->second);
+    Settings::sounds["hurt"] = sound;
+
     if (!Settings::music.openFromFile(Settings::SOUNDS_PATH + "marios_way.ogg"))
     {
         throw std::runtime_error{"Error loading music sounds/marios_way.ogg"};
+    }
+
+    if (!Settings::music_power_up.openFromFile(Settings::SOUNDS_PATH + "power_up_music.ogg"))
+    {
+        throw std::runtime_error{"Error loading music sounds/power_up_music.ogg"};
     }
 }
 

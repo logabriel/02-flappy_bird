@@ -49,7 +49,7 @@ void NormalMode::render(sf::RenderTarget& target) const noexcept
     render_text(target, 20, 10, "Score: " + std::to_string(bird->get_score()), Settings::FLAPPY_TEXT_SIZE, "flappy", sf::Color::White);
 }
 
-void NormalMode::spawn_entity(float& logs_spawn_timer, std::mt19937 &rng, float &last_log_y, std::list<std::shared_ptr<LogPair>>& logs, Factory<LogPair>& log_factory) noexcept
+void NormalMode::spawn_entity(float& logs_spawn_timer, std::mt19937 &rng, float &last_log_y, std::list<std::shared_ptr<LogPair>>& logs, Factory<LogPair>& log_factory, Factory<PowerUp>& power_up_factory, std::list<std::shared_ptr<PowerUp> >& power_ups) noexcept
 {
     logs_spawn_timer = 0.f;
 

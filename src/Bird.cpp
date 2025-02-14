@@ -12,7 +12,7 @@
 #include <src/Bird.hpp>
 
 Bird::Bird(float _x, float _y, float w, float h) noexcept
-    : x{_x}, y{_y}, width{w}, height{h}, vy{0.f}, sprite{Settings::textures["bird"]}
+    : x{_x}, y{_y}, width{w}, height{h}, vy{0.f}, sprite{Settings::textures["bird"]}, intangible{false}
 {
     sprite.setPosition(x, y);
 }
@@ -33,6 +33,16 @@ void Bird::jump() noexcept
 void Bird::update(float dt) noexcept
 {
     moving(dt);
+
+    if (intangible)
+    {   
+        if(timer_intangible >= Settings::power_up_duration) 
+        {
+            deactivate_power_up();
+            timer_intangible = 0.f;
+        }
+        timer_intangible += dt;
+    }
 }
 
 void Bird::render(sf::RenderTarget& target) const noexcept
@@ -80,4 +90,23 @@ void Bird::moving(float dt) noexcept
     x += vx * dt;
 
     sprite.setPosition(x, y);
+}
+
+void Bird::activate_power_up() noexcept
+{
+    intangible = true;
+    sprite.setTexture(Settings::textures["bird_ghost"]);
+}
+
+void Bird::deactivate_power_up() noexcept
+{
+    intangible = false;
+    Settings::music_power_up.stop();
+    Settings::music.play();
+    sprite.setTexture(Settings::textures["bird"]);
+}
+
+bool Bird::get_intangible() const noexcept
+{
+    return intangible;
 }

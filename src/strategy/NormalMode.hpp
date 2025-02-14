@@ -16,7 +16,7 @@ public:
 
     void render(sf::RenderTarget& target) const noexcept override;
 
-    void spawn_entity(float &logs_spawn_timer, std::mt19937 &rng, float &last_log_y, std::list<std::shared_ptr<LogPair>> &logs, Factory<LogPair> &log_factory) noexcept override;
+    void spawn_entity(float &logs_spawn_timer, std::mt19937 &rng, float &last_log_y, std::list<std::shared_ptr<LogPair>> &logs, Factory<LogPair> &log_factory, Factory<PowerUp>& power_up_factory, std::list<std::shared_ptr<PowerUp> >& power_ups) noexcept override;
 
     float get_timer_spawn_log() noexcept override;
 private:

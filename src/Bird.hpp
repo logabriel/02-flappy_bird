@@ -40,6 +40,12 @@ public:
     void stop_move() noexcept;
 
     void moving(float dt) noexcept;
+
+    void activate_power_up() noexcept;
+
+    void deactivate_power_up() noexcept;
+
+    bool get_intangible() const noexcept;
     //codigo nuevo *********************************************************
 private:
     float x;
@@ -47,8 +53,12 @@ private:
     float width;
     float height;
     float vy;
-    float vx; //codigo nuevo *********************
     sf::Sprite sprite;
     bool jumping{false};
-    int score{0}; //codigo nuevo *****************
+    //codigo nuevo *********************
+    float vx; 
+    int score{0}; 
+    bool intangible;
+    float timer_intangible{0};
+    //codigo nuevo *****************
 };

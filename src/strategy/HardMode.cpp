@@ -40,7 +40,7 @@ void HardMode::update(float dt) noexcept
     bird->update(dt);
     world->update(dt);
 
-    if (world->collides(bird->get_collision_rect()))
+    if (world->collides(bird->get_collision_rect()) && !bird->get_intangible())
     {
         Settings::sounds["explosion"].play();
         Settings::sounds["hurt"].play();
@@ -52,6 +52,13 @@ void HardMode::update(float dt) noexcept
         bird->add_point();
         Settings::sounds["score"].play();
     }
+
+    if (world->activate_power_up(bird->get_collision_rect()))
+    {
+        Settings::music.stop();
+        Settings::music_power_up.play();
+        bird->activate_power_up();
+    }
 }
 
 void HardMode::render(sf::RenderTarget& target) const noexcept
@@ -61,7 +68,7 @@ void HardMode::render(sf::RenderTarget& target) const noexcept
     render_text(target, 20, 10, "Score: " + std::to_string(bird->get_score()), Settings::FLAPPY_TEXT_SIZE, "flappy", sf::Color::White);
 }
 
-void HardMode::spawn_entity(float& logs_spawn_timer, std::mt19937 &rng, float &last_log_y, std::list<std::shared_ptr<LogPair>>& logs, Factory<LogPair>& log_factory) noexcept
+void HardMode::spawn_entity(float& logs_spawn_timer, std::mt19937 &rng, float &last_log_y, std::list<std::shared_ptr<LogPair>>& logs, Factory<LogPair>& log_factory, Factory<PowerUp>& power_up_factory, std::list<std::shared_ptr<PowerUp> >& power_ups) noexcept
 {
     logs_spawn_timer = 0.f;
 
@@ -73,21 +80,27 @@ void HardMode::spawn_entity(float& logs_spawn_timer, std::mt19937 &rng, float &l
     last_log_y = y;
 
     std::uniform_int_distribution<int> dist_gap{56, 90};
+    float log_gap = (float)dist_gap(rng);
+
     std::shared_ptr<Log> _top;
     std::shared_ptr<Log> _bottom;
 
-    if (dist(rng) % 2 == 0) 
+    if (dist(rng) % 4 == 0) 
     {
         _top = std::make_shared<MovingLog>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
-        _bottom = std::make_shared<MovingLog>((float)Settings::VIRTUAL_WIDTH, y + (float)dist_gap(rng) + Settings::LOG_HEIGHT, false);
+        _bottom = std::make_shared<MovingLog>((float)Settings::VIRTUAL_WIDTH, y + log_gap + Settings::LOG_HEIGHT, false);
     }
     else 
     {
         _top = std::make_shared<StaticLog>((float)Settings::VIRTUAL_WIDTH, y + Settings::LOG_HEIGHT, true);
-        _bottom = std::make_shared<StaticLog>((float)Settings::VIRTUAL_WIDTH, y + (float)dist_gap(rng) + Settings::LOG_HEIGHT, false);
+        _bottom = std::make_shared<StaticLog>((float)Settings::VIRTUAL_WIDTH, y + log_gap + Settings::LOG_HEIGHT, false);
     }
-
     logs.push_back(log_factory.create((float)Settings::VIRTUAL_WIDTH, y, _top, _bottom));
+
+    if (dist(rng) % 5 == 0 && power_ups.empty()) 
+    {   
+        power_ups.push_back(power_up_factory.create(Settings::VIRTUAL_WIDTH, y + log_gap / 2 + Settings::LOG_HEIGHT - Settings::BERRIE_HEIGHT / 2));
+    }  
 }
 
 float HardMode::get_timer_spawn_log() noexcept

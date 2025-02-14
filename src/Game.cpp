@@ -40,6 +40,8 @@ Game::Game()
 
     Settings::music.setLoop(true);
     Settings::music.play();
+
+    Settings::music_power_up.setLoop(true);
 }
 
 sf::RenderWindow& Game::get_window() noexcept

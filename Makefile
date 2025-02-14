@@ -4,7 +4,7 @@ INCLUDE = -I.
 
 BUILD_DIR = build
 
-OBJ_RULES = text_utilities.o Settings.o Game.o Bird.o Log.o LogPair.o World.o StateMachine.o TitleScreenState.o CountDownState.o PlayingState.o PauseState.o NormalMode.o HardMode.o MovingLog.o StaticLog.o
+OBJ_RULES = text_utilities.o Settings.o Game.o Bird.o Log.o LogPair.o World.o StateMachine.o TitleScreenState.o CountDownState.o PlayingState.o PauseState.o NormalMode.o HardMode.o MovingLog.o StaticLog.o PowerUp.o
 
 LIBS = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system $(BUILD_DIR)/*.o
 
@@ -58,6 +58,9 @@ MovingLog.o: $(BUILD_DIR) src/MovingLog.hpp src/MovingLog.cpp
 
 StaticLog.o: $(BUILD_DIR) src/StaticLog.hpp src/StaticLog.cpp
 	$(CXX) -c $(INCLUDE) src/StaticLog.cpp -o $(BUILD_DIR)/$@
+
+PowerUp.o: $(BUILD_DIR) src/PowerUp.hpp src/PowerUp.cpp
+	$(CXX) -c $(INCLUDE) src/PowerUp.cpp -o $(BUILD_DIR)/$@
 
 $(BUILD_DIR):
 	mkdir -p $@

@@ -29,6 +29,12 @@ void World::reset(bool _generate_logs) noexcept
         log_factory.remove(log_pair);
     }
     logs.clear();
+
+    for (auto power_up: power_ups)
+    {
+        power_up_factory.remove(power_up);
+    }
+    power_ups.clear();
 }
 
 bool World::collides(const sf::FloatRect& rect) const noexcept
@@ -70,7 +76,7 @@ void World::update(float dt) noexcept
 
         if (logs_spawn_timer >= game_mode->get_timer_spawn_log())
         {
-            game_mode->spawn_entity(logs_spawn_timer, rng, last_log_y, logs, log_factory);
+            game_mode->spawn_entity(logs_spawn_timer, rng, last_log_y, logs, log_factory, power_up_factory, power_ups);
         }
     }   
 
@@ -107,6 +113,22 @@ void World::update(float dt) noexcept
             ++it;
         }
     }
+
+    for (auto it = power_ups.begin(); it != power_ups.end(); )
+    {
+        if ((*it)->is_out_of_game())
+        {
+            auto power_up = *it;
+            power_up->reset();
+            power_up_factory.remove(power_up);
+            it = power_ups.erase(it);
+        }
+        else
+        {
+            (*it)->update(dt);
+            ++it;
+        }
+    }
 }
 
 void World::render(sf::RenderTarget& target) const noexcept
@@ -117,7 +139,15 @@ void World::render(sf::RenderTarget& target) const noexcept
     {
         log_pair->render(target);
     }
-
+    
+    if (!power_ups.empty()) 
+    {
+        for (const auto& power_up: power_ups)
+        {
+            power_up->render(target);
+        }
+    }
+    
     target.draw(ground);
 }
 
@@ -127,4 +157,19 @@ void World::set_game_mode(std::shared_ptr<BaseStrategy> _game_mode) noexcept
     {
         game_mode = _game_mode;
     }
+}
+
+bool World::activate_power_up(const sf::FloatRect& rect) noexcept
+{
+    for (auto power_up: power_ups)
+    {
+        if (power_up->collides(rect))
+        {
+            power_up->disappear();
+            power_up_factory.remove(power_up);
+            return true;
+        }
+    }
+
+    return false;
 }

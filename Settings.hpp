@@ -44,7 +44,11 @@ struct Settings
     static constexpr int HUGE_TEXT_SIZE{56};
     static constexpr int FLAPPY_TEXT_SIZE{28};
     static constexpr float BIRD_SPEED_X{60.f};
+    static constexpr float power_up_duration{8.f};
     static bool game_mode;
+
+    static constexpr float BERRIE_WIDTH{30.F};
+    static constexpr float BERRIE_HEIGHT{30.F};
 
     static std::unordered_map<std::string, sf::Texture> textures;
     static std::unordered_map<std::string, sf::SoundBuffer> sound_buffers;
@@ -52,6 +56,7 @@ struct Settings
     static std::unordered_map<std::string, sf::Font> fonts;
 
     static sf::Music music;
+    static sf::Music music_power_up;
 
     static void init();
 

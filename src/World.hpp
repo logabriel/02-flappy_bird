@@ -18,6 +18,7 @@
 
 #include <src/Factory.hpp>
 #include <src/LogPair.hpp>
+#include <src/PowerUp.hpp>
 
 #include <src/strategy/BaseStrategy.hpp>
 
@@ -41,6 +42,8 @@ public:
     void render(sf::RenderTarget& target) const noexcept;
 
     void set_game_mode(std::shared_ptr<BaseStrategy> _game_mode) noexcept; 
+
+    bool activate_power_up(const sf::FloatRect& rect) noexcept;
 private:
     bool generate_logs;
 
@@ -51,8 +54,10 @@ private:
     float ground_x{0.f};
 
     Factory<LogPair> log_factory;
+    Factory<PowerUp> power_up_factory;
 
     std::list<std::shared_ptr<LogPair>> logs;
+    std::list<std::shared_ptr<PowerUp> > power_ups;
 
     std::mt19937 rng;
 
