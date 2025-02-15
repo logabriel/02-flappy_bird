@@ -1,3 +1,9 @@
+/*
+    Assignment: Flappy Bird
+
+    This file contains the definition of the class MovingLog.
+*/
+
 #include <Settings.hpp>
 #include <src/MovingLog.hpp>
 

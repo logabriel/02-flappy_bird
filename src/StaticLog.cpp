@@ -1,3 +1,9 @@
+/*
+    Assignment: Flappy Bird
+
+    This file contains the definition of the class StaticLog.
+*/
+
 #include <Settings.hpp>
 #include <src/StaticLog.hpp>
 

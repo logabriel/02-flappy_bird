@@ -12,8 +12,6 @@
 #include <src/Log.hpp>
 #include <src/LogPair.hpp>
 
-/*top{x, y + Settings::LOG_HEIGHT, true},
-      bottom{x, y + Settings::LOGS_GAP + Settings::LOG_HEIGHT, false}*/
 
 LogPair::LogPair(float _x, float _y, std::shared_ptr<Log> _top, std::shared_ptr<Log> _bottom) noexcept
     : x{_x}, y{_y},

@@ -1,11 +1,7 @@
 /*
-    ISPPV1 2023
-    Study Case: Flappy Bird
+    Assignment: Flappy Bird
 
-    Author: Alejandro Mujica
-    alejandro.j.mujic4@gmail.com
-
-    This file contains the declaration of the class PlayingBaseState.
+    This file contains the declaration of the class PauseState.
 */
 
 #pragma once

@@ -1,3 +1,9 @@
+/*
+    Assignment: Flappy Bird
+
+    This file contains the definition of the class PowerUp.
+*/
+
 #include <Settings.hpp>
 #include <src/PowerUp.hpp>
 

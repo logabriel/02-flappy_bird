@@ -28,7 +28,7 @@ public:
     void update(float dt) noexcept;
 
     void render(sf::RenderTarget& target) const noexcept;
-    //codigo nuevo *********************************************************
+    
     void add_point() noexcept;
 
     int get_score() const noexcept;
@@ -46,19 +46,18 @@ public:
     void deactivate_power_up() noexcept;
 
     bool get_intangible() const noexcept;
-    //codigo nuevo *********************************************************
+    
 private:
     float x;
     float y;
     float width;
     float height;
     float vy;
-    sf::Sprite sprite;
-    bool jumping{false};
-    //codigo nuevo *********************
     float vx; 
+    bool jumping{false};
     int score{0}; 
     bool intangible;
     float timer_intangible{0};
-    //codigo nuevo *****************
+    sf::Sprite sprite;
+    
 };

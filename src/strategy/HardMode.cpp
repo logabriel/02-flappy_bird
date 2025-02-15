@@ -1,3 +1,9 @@
+/*
+    Assignment: Flappy Bird
+
+    This file contains the definition of the class HardMode.
+*/
+
 #include <Settings.hpp>
 #include <src/text_utilities.hpp>
 #include <src/states/StateMachine.hpp>

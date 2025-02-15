@@ -1,3 +1,9 @@
+/*
+    Assignment: Flappy Bird
+
+    This file contains the declaration of the class HardMode.
+*/
+
 #pragma once
 
 #include <src/Bird.hpp>
